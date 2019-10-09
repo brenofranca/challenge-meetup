@@ -4,8 +4,9 @@ import {
   Container,
   Form,
   Logo,
-  Email,
-  Password,
+  AccountName,
+  AccountEmail,
+  AccountPassword,
   ButtonSignIn,
   ButtonSignInText,
   ButtonSignUp,
@@ -13,27 +14,40 @@ import {
 } from "./styles";
 
 interface Account {
+  name: string;
   email: string;
   password: string;
 }
 
-export default function signIn({ navigation }) {
+export default function signUp({ navigation }) {
   const [account, setAccount] = useState({
+    name: "",
     email: "",
     password: ""
   } as Account);
 
-  function handleLogin() {
-    if (!account.email || !account.password) return;
+  function handleCreateAccount() {
+    if (!account.name || !account.email || !account.password) return;
 
-    AsyncStorage.setItem("@Meetup:crendentials", JSON.stringify(account));
+    console.log(account);
   }
 
   return (
     <Container behavior="padding" enabled={false}>
       <Form>
         <Logo>M</Logo>
-        <Email
+
+        <AccountName
+          placeholder="Nome Completo"
+          autoCapitalize="sentences"
+          autoCorrect={false}
+          autoFocus={true}
+          returnKeyType="next"
+          value={account.email}
+          onChangeText={name => setAccount({ ...account, name })}
+        />
+
+        <AccountEmail
           placeholder="Digite seu e-mail"
           autoCapitalize="none"
           autoCorrect={false}
@@ -43,7 +57,7 @@ export default function signIn({ navigation }) {
           onChangeText={email => setAccount({ ...account, email })}
         />
 
-        <Password
+        <AccountPassword
           placeholder="Sua senha secreta"
           autoCapitalize="none"
           autoCorrect={false}
@@ -53,12 +67,12 @@ export default function signIn({ navigation }) {
           onChangeText={password => setAccount({ ...account, password })}
         />
 
-        <ButtonSignIn onPress={() => handleLogin()}>
-          <ButtonSignInText>Entrar</ButtonSignInText>
+        <ButtonSignIn onPress={() => handleCreateAccount()}>
+          <ButtonSignInText>Criar conta</ButtonSignInText>
         </ButtonSignIn>
 
-        <ButtonSignUp onPress={() => navigation.navigate("SignUp")}>
-          <ButtonSignUpText>Criar conta grátis</ButtonSignUpText>
+        <ButtonSignUp onPress={() => navigation.navigate("SignIn")}>
+          <ButtonSignUpText>Já tenho login</ButtonSignUpText>
         </ButtonSignUp>
       </Form>
     </Container>

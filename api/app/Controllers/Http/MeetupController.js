@@ -9,7 +9,7 @@ class MeetupController {
     return { meetups };
   }
 
-  async store({ request, response }) {
+  async store({ request }) {
     const data = request.only(["title", "date", "address", "organizer"]);
 
     const meetup = await Meetup.create(data);
@@ -17,11 +17,11 @@ class MeetupController {
     return { meetup };
   }
 
-  async show({ params, request, response, view }) {}
+  async destroy({ params }) {
+    const meetup = await Meetup.findOrFail(params.id);
 
-  async update({ params, request, response }) {}
-
-  async destroy({ params, request, response }) {}
+    await meetup.delete();
+  }
 }
 
 module.exports = MeetupController;

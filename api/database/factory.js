@@ -11,3 +11,13 @@ Factory.blueprint("App/Models/User", (faker, i, data) => {
     ...data
   };
 });
+
+Factory.blueprint("App/Models/Meetup", (faker, i, data) => {
+  return {
+    title: faker.sentence({ words: 3 }),
+    date: faker.date(),
+    address: faker.address(),
+    organizer: faker.name(),
+    ...data
+  };
+});

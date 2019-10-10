@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const cardImage = require("../../../assets/meetup1.png");
 
-export default function meetupItem() {
+export default function meetupItem({ inscripted }) {
   return (
     <Card>
       <ImageContainer>
@@ -38,7 +38,9 @@ export default function meetupItem() {
           </CardDescriptionText>
         </CardDescription>
         <ButtonInscription>
-          <ButtonInscriptionText>Realizar Inscrição</ButtonInscriptionText>
+          <ButtonInscriptionText>
+            {inscripted ? "Cancelar inscrição" : "Realizar Inscrição"}
+          </ButtonInscriptionText>
         </ButtonInscription>
       </CardBody>
     </Card>

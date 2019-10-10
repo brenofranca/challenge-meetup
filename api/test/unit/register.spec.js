@@ -1,20 +1,17 @@
-const { test, trait } = use("Test/Suite")("SignUp");
+const { test, trait } = use("Test/Suite")("Register");
 const Factory = use("Factory");
 const User = use("App/Models/User");
 
 trait("Test/ApiClient");
 trait("DatabaseTransactions");
 
-test("should be able user sign up and generate jwt", async ({
-  assert,
-  client
-}) => {
+test("should be able user sign up", async ({ client }) => {
   const { name, email, password } = await Factory.model(
     "App/Models/User"
   ).make();
 
   const response = await client
-    .post("/api/signup")
+    .post("/api/register")
     .header("accept", "application/json")
     .send({
       name,
@@ -22,8 +19,6 @@ test("should be able user sign up and generate jwt", async ({
       password
     })
     .end();
-
-  assert.isDefined(response.body.token);
 
   response.assertStatus(200);
 
@@ -47,7 +42,7 @@ test("should not be able user sign up if email already registered", async ({
   ).create();
 
   const response = await client
-    .post("/api/signup")
+    .post("/api/register")
     .header("accept", "application/json")
     .send({
       name,
@@ -68,7 +63,7 @@ test("should not be able user sign up with not name, email or password", async (
   ).make();
 
   const store = () =>
-    client.post("/api/signup").header("accept", "application/json");
+    client.post("/api/register").header("accept", "application/json");
 
   let response = await store()
     .send({ email, password })

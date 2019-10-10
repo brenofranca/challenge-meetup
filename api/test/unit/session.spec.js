@@ -1,4 +1,4 @@
-const { test, trait } = use("Test/Suite")("SignIn");
+const { test, trait } = use("Test/Suite")("Session");
 const Factory = use("Factory");
 const User = use("App/Models/User");
 
@@ -16,7 +16,7 @@ test("should be able to sign in by passing credentials correctly", async ({
   });
 
   const response = await client
-    .post("/api/signin")
+    .post("/api/session")
     .send({ email, password })
     .end();
 
@@ -32,7 +32,7 @@ test("should not be able to sign in by passing credentials incorrect", async ({
   const { email } = await Factory.model("App/Models/User").create();
 
   const response = await client
-    .post("/api/signin")
+    .post("/api/session")
     .send({ email, password: "1234567" })
     .end();
 
@@ -47,7 +47,7 @@ test("should not be able user sign in if email not registered", async ({
   const { email, password } = await Factory.model("App/Models/User").make();
 
   const response = await client
-    .post("/api/signin")
+    .post("/api/session")
     .send({ email, password })
     .end();
 

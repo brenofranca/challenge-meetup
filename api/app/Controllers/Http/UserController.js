@@ -1,16 +1,32 @@
 "use strict";
 
-const User = use("App/Models/User");
-
 class UserController {
-  async store({ auth, request }) {
-    const data = await request.only(["name", "email", "password"]);
+  async show({ auth }) {
+    const user = await auth.user;
 
-    const user = await User.create(data);
+    await user.load("meetups");
 
-    const token = await auth.generate(user);
+    return user;
+  }
 
-    return { user, token };
+  async update({ request, auth }) {
+    const user = await auth.user;
+
+    const password = request.input("password");
+
+    const data = await request.only(["name", "email"]);
+
+    if (password) {
+      data.password = password;
+    }
+
+    user.merge(data);
+
+    await user.save();
+
+    await user.load("meetups");
+
+    return user;
   }
 }
 

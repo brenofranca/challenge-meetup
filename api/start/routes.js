@@ -8,8 +8,14 @@ Route.get("/", () => {
 });
 
 Route.group(() => {
-  Route.post("signin", "SessionController.store");
-  Route.post("signup", "UserController.store").validator("UserStore");
+  Route.post("session", "SessionController.store");
+  Route.post("register", "RegisterController.store").validator("UserStore");
+
+  Route.get("me", "UserController.show").middleware(["auth"]);
+  Route.put("me", "UserController.update")
+    .validator("UserUpdate")
+    .middleware(["auth"]);
+
   Route.resource("meetups", "MeetupController")
     .validator(new Map([[["meetups.store"], ["MeetupStore"]]]))
     .apiOnly();

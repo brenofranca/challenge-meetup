@@ -12,10 +12,6 @@ class UserStore {
       password: "required"
     };
   }
-
-  // async fails() {
-  //   return this.ctx.response.status(422);
-  // }
 }
 
 module.exports = UserStore;

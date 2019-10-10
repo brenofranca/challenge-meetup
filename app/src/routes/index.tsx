@@ -1,11 +1,12 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import SignInScreen from "../pages/signIn/index";
-import SignUpScreen from "../pages/signUp/index";
 import DashboardScreen from "../pages/dashboard/index";
 import InscriptionScreen from "../pages/inscription/index";
-import { MaterialIcons } from "@expo/vector-icons";
+import ProfileScreen from "../pages/profile/index";
+import SignInScreen from "../pages/signIn/index";
+import SignUpScreen from "../pages/signUp/index";
 
 const BottomTabNavigator = createBottomTabNavigator(
   {
@@ -38,10 +39,25 @@ const BottomTabNavigator = createBottomTabNavigator(
           />
         )
       }
+    },
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: {
+        tabBarLabel: "Meu perfil",
+        tabBarIcon: ({ focused }) => (
+          <MaterialIcons
+            name="person"
+            size={35}
+            color={
+              focused ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0.6)"
+            }
+          />
+        )
+      }
     }
   },
   {
-    order: ["Home", "Inscriptions"],
+    order: ["Home", "Inscriptions", "Profile"],
     tabBarOptions: {
       activeTintColor: "#FFF",
       inactiveTintColor: "rgba(255, 255, 255, 0.6)",

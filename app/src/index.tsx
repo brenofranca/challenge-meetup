@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { AsyncStorage, StatusBar } from "react-native";
+import { Provider } from "react-redux";
 import createAppNavigator from "./routes/index";
-import { AsyncStorage } from "react-native";
+import NavigationService from "./services/navigation";
+import store from "./store";
 
 export default function App() {
   const [checked, setChecked] = useState(false);
@@ -26,5 +29,12 @@ export default function App() {
 
   const Routes = createAppNavigator(authenticated);
 
-  return <Routes />;
+  return (
+    <Provider store={store}>
+      <StatusBar barStyle="light-content" />
+      <Routes
+        ref={navigatorRef => NavigationService.setNavigator(navigatorRef)}
+      />
+    </Provider>
+  );
 }

@@ -21,6 +21,25 @@ test("should be able to view the list of meetups", async ({
   assert.equal(countExpected, response.body.meetups.length);
 });
 
+test("should be able to view and filter the list of meetups", async ({
+  client,
+  assert
+}) => {
+  const dateToFilter = "2019-10-13";
+
+  await Factory.model("App/Models/Meetup").createMany(10);
+
+  const meetupsPerDay = await Meetup.query()
+    .where("date", "LIKE", `%${dateToFilter}%`)
+    .getCount();
+
+  const response = await client.get(`/api/meetups?date=${dateToFilter}`).end();
+
+  response.assertStatus(200);
+
+  assert.equal(meetupsPerDay, response.body.meetups.length);
+});
+
 test("should be able create meetup", async ({ client }) => {
   const { title, date, address, organizer } = await Factory.model(
     "App/Models/Meetup"

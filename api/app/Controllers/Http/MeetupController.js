@@ -3,8 +3,16 @@
 const Meetup = use("App/Models/Meetup");
 
 class MeetupController {
-  async index() {
-    const meetups = await Meetup.all();
+  async index({ request }) {
+    const date = request.input("date");
+
+    const query = Meetup.query();
+
+    if (date) {
+      query.where("date", "LIKE", `%${date}%`);
+    }
+
+    const meetups = await query.fetch();
 
     return { meetups };
   }

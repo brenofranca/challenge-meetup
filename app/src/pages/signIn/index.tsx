@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { AsyncStorage } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { loginRequest } from "../../store/login/actions";
 import {
   Container,
   Form,
   Logo,
   Email,
   Password,
+  ButtonLoading,
   ButtonSignIn,
   ButtonSignInText,
   ButtonSignUp,
@@ -17,16 +19,30 @@ interface Account {
   password: string;
 }
 
+interface LoginState {
+  data: {
+    type: string;
+    token: string;
+    refreshToken: string;
+  };
+  error: null | string;
+  loading: null | boolean;
+}
+
 export default function signIn({ navigation }) {
+  const dispatch = useDispatch();
+
+  const login = useSelector(state => state.login) as LoginState;
+
   const [account, setAccount] = useState({
-    email: "",
-    password: ""
+    email: "franciscobreno.si@gmail.com",
+    password: "12345678"
   } as Account);
 
   function handleLogin() {
     if (!account.email || !account.password) return;
 
-    AsyncStorage.setItem("@Meetup:crendentials", JSON.stringify(account));
+    dispatch(loginRequest(account));
   }
 
   return (
@@ -54,7 +70,11 @@ export default function signIn({ navigation }) {
         />
 
         <ButtonSignIn onPress={() => handleLogin()}>
-          <ButtonSignInText>Entrar</ButtonSignInText>
+          {login.loading ? (
+            <ButtonLoading />
+          ) : (
+            <ButtonSignInText>Entrar</ButtonSignInText>
+          )}
         </ButtonSignIn>
 
         <ButtonSignUp onPress={() => navigation.navigate("SignUp")}>

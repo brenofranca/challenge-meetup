@@ -11,7 +11,7 @@ export default function App() {
 
   useEffect(() => {
     async function _loadCredentials() {
-      const credentials = await AsyncStorage.getItem("@Meetup:crendentials");
+      const credentials = await AsyncStorage.getItem("@Meetup:token");
 
       if (credentials) {
         setAuthenticated(true);

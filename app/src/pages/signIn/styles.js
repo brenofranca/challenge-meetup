@@ -30,7 +30,7 @@ export const Email = styled.TextInput.attrs({
   height: 60px;
   padding: 20px;
   font-size: 20px;
-  color: #979797;
+  color: #fff;
   /* border: 0.2px solid #979797; */
 `;
 
@@ -44,11 +44,11 @@ export const Password = styled.TextInput.attrs({
   padding: 20px;
   font-size: bold;
   font-size: 20px;
-  color: #979797;
+  color: #fff;
   margin-top: 20px;
 `;
 
-export const ButtonSignIn = styled(RectButton)`
+export const ButtonSignIn = styled.TouchableOpacity`
   background-color: #f94d6a;
   width: 100%;
   border-radius: 4px;
@@ -78,3 +78,8 @@ export const ButtonSignUpText = styled.Text`
   font-size: 16px;
   font-family: Helvetica;
 `;
+
+export const ButtonLoading = styled.ActivityIndicator.attrs({
+  color: "#FFF",
+  size: "small"
+})``;

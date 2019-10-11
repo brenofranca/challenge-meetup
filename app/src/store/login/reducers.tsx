@@ -1,11 +1,25 @@
-export default function login(state = [], action) {
+import { LOGIN_REQUEST } from "./actions";
+import { LOGIN_SUCCESS } from "./actions";
+import { LOGIN_ERROR } from "./actions";
+
+const INITIAL_STATE = {
+  data: {
+    type: "",
+    token: "",
+    refreshToken: ""
+  },
+  error: null,
+  loading: null
+};
+
+export default function login(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case "@login/REQUEST":
-      return state;
-    case "@login/SUCCESS":
-      return state;
-    case "@login/ERROR":
-      return state;
+    case LOGIN_REQUEST:
+      return { ...state, loading: true };
+    case LOGIN_SUCCESS:
+      return { ...state, loading: false, data: action.payload.token };
+    case LOGIN_ERROR:
+      return { ...state, loading: false };
     default:
       return state;
   }

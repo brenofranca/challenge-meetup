@@ -50,3 +50,8 @@ export const ButtonText = styled.Text`
   font-size: 20px;
   font-family: Helvetica;
 `;
+
+export const ButtonLoading = styled.ActivityIndicator.attrs({
+  color: "#FFF",
+  size: "small"
+})``;

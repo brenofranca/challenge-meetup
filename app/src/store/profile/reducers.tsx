@@ -1,4 +1,9 @@
-import { PROFILE_REQUEST, PROFILE_SUCCESS, PROFILE_ERROR } from "./actions";
+import {
+  PROFILE_REQUEST,
+  PROFILE_UPDATE,
+  PROFILE_SUCCESS,
+  PROFILE_ERROR
+} from "./actions";
 
 export interface Meetup {
   id: number;
@@ -25,15 +30,22 @@ export interface Action {
   payload: object;
 }
 
+export interface ProfileState {
+  data: User;
+  error: null | string;
+  loading: boolean | string;
+}
+
 const INITIAL_STATE = {
   data: {} as User,
   error: null,
   loading: null
-};
+} as ProfileState;
 
-export default function profile(state = INITIAL_STATE, action) {
+export default function profile(state = INITIAL_STATE, action = {} as Action) {
   switch (action.type) {
     case PROFILE_REQUEST:
+    case PROFILE_UPDATE:
       return { ...state, loading: true };
     case PROFILE_SUCCESS:
       return { ...state, loading: false, data: action.payload };

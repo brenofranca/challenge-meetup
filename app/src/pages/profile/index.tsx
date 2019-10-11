@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { profileRequest } from "../../store/profile/actions";
+import { profileRequest, profileUpdate } from "../../store/profile/actions";
 import {
   Container,
   Content,
   Input,
   HairLine,
   Button,
-  ButtonText
+  ButtonText,
+  ButtonLoading
 } from "./styles";
 import Header from "../../components/header/index";
+import { ProfileState } from "../../store/profile/reducers";
 
 class Account {
   name: string = "";
@@ -22,7 +24,7 @@ class Account {
 export default function profile() {
   const dispatch = useDispatch();
 
-  const profile = useSelector(state => state.profile);
+  const profile = useSelector(state => state.profile) as ProfileState;
 
   const [account, setAccount] = useState(new Account());
 
@@ -37,6 +39,10 @@ export default function profile() {
       setAccount({ ...account, name, email });
     }
   }, [profile]);
+
+  function handleUpdateProfile() {
+    dispatch(profileUpdate(account));
+  }
 
   return (
     <Container>
@@ -68,7 +74,7 @@ export default function profile() {
           autoCapitalize="none"
           autoCorrect={false}
           autoFocus={true}
-          secureEntry={true}
+          secureTextEntry={true}
           returnKeyType="next"
           onChangeText={password_current =>
             setAccount({ ...account, password_current })
@@ -80,7 +86,7 @@ export default function profile() {
           autoCapitalize="none"
           autoCorrect={false}
           autoFocus={true}
-          secureEntry={true}
+          secureTextEntry={true}
           returnKeyType="next"
           onChangeText={password_new =>
             setAccount({ ...account, password_new })
@@ -92,15 +98,19 @@ export default function profile() {
           autoCapitalize="none"
           autoCorrect={false}
           autoFocus={true}
-          secureEntry={true}
+          secureTextEntry={true}
           returnKeyType="done"
           onChangeText={password_confirmation =>
             setAccount({ ...account, password_confirmation })
           }
         />
 
-        <Button>
-          <ButtonText>Salvar perfil</ButtonText>
+        <Button onPress={() => handleUpdateProfile()}>
+          {profile.loading ? (
+            <ButtonLoading />
+          ) : (
+            <ButtonText>Salvar perfil</ButtonText>
+          )}
         </Button>
 
         <Button heightSize="40px">

@@ -3,6 +3,7 @@ import { LOGIN_REQUEST, loginError, loginSuccess } from "./actions";
 import api from "../../services/api";
 import NavigationService from "../../services/navigation";
 import { AsyncStorage } from "react-native";
+import { profileRequest } from "../profile/actions";
 
 interface LoginToken {
   token: {
@@ -25,6 +26,8 @@ function* sendLogin({ payload }) {
     );
 
     yield put(loginSuccess(data));
+
+    yield put(profileRequest());
 
     NavigationService.navigate("Dashboard");
   } catch (err) {

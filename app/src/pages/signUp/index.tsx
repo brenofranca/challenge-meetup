@@ -29,7 +29,7 @@ export default function signUp({ navigation }) {
   function handleCreateAccount() {
     if (!account.name || !account.email || !account.password) return;
 
-    console.log(account);
+    // console.log(account);
   }
 
   return (

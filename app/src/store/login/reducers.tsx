@@ -1,6 +1,4 @@
-import { LOGIN_REQUEST } from "./actions";
-import { LOGIN_SUCCESS } from "./actions";
-import { LOGIN_ERROR } from "./actions";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_ERROR } from "./actions";
 
 const INITIAL_STATE = {
   data: {

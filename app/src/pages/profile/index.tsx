@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { profileRequest } from "../../store/profile/actions";
 import {
   Container,
   Content,
@@ -10,15 +12,31 @@ import {
 import Header from "../../components/header/index";
 
 class Account {
-  name: string = "Breno França";
-  email: string = "franciscobreno.si@gmail.com";
+  name: string = "";
+  email: string = "";
   password_new: string;
   password_current: string;
   password_confirmation: string;
 }
 
 export default function profile() {
+  const dispatch = useDispatch();
+
+  const profile = useSelector(state => state.profile);
+
   const [account, setAccount] = useState(new Account());
+
+  useEffect(() => {
+    dispatch(profileRequest());
+  }, []);
+
+  useEffect(() => {
+    if (profile.data) {
+      const { name, email } = profile.data;
+
+      setAccount({ ...account, name, email });
+    }
+  }, [profile]);
 
   return (
     <Container>

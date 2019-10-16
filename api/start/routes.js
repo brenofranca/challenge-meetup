@@ -18,6 +18,7 @@ Route.group(() => {
 
   Route.resource("meetups", "MeetupController")
     .validator(new Map([[["meetups.store"], ["MeetupStore"]]]))
+    .middleware(["auth"])
     .apiOnly();
 
   Route.post(
